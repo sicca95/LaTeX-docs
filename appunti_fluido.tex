@@ -1,0 +1,908 @@
+\documentclass[10pt]{article}
+\usepackage[italian]{babel}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+\usepackage{cite}      
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{psfrag}    
+\usepackage{subfigure} 
+\usepackage{bm} 
+\usepackage{mathtools}
+\usepackage{stfloats} 
+\usepackage{float}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{textcomp}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows}
+\setmarginsrb{1.75 cm}{1.25 cm}{1.75 cm}{1.25 cm}{0.5 cm}{1 cm}{0.5 cm}{1.5 cm}
+
+\title{Fluidodinamica nel volo spaziale}								% Title
+\author{Marco Siccardi}								% Author
+\date{}											% Date
+
+\makeatletter 
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+\begin{document}
+
+\tableofcontents
+\listoffigures
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Biofluidodinamica}
+\subsection{apparato cardiocircolatorio}
+Il sistema cardiocircolatorio svolge principalmente la funzione di trasporto dell'ossigeno, delle sostanze nutritive e delle scorie oltre che funzioni accessorie quali la regolazione della temperatura e il mantenimento del flusso sanguigno.
+\\Dal punto di vista ingegneristico può essere visto come una macchina idraulica costituita da una pompa
+( cuore) e un fluido ( sangue); sono presenti inoltre tubi di collegamento ( vasi sanguigni) e una fitta rete di capillari.
+La circolazione si suddivide in 
+\begin{itemize}
+    \item \textbf{circolazione sistemica}: detta anche grande circolazione, è quella che parte del cuore e raggiunge il resto del corpo
+    \item \textbf{circolazione polmonare}: circolazione che comprende solamente i polmoni e il cuore e in cui vengono scambiati ossigeno (dai polmoni raggiungono il cuore) e scorie (dal cuore raggiungono i polmoni per essere espulse)
+\end{itemize}
+ogni circuito inoltre è un sistema venoso e arterioso.
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/circolazioni_sist_polmonare.PNG}
+\caption{circolazioni sistemica e polmonare}
+\label{fig:circolazioni}
+\end{figure}
+Lo scambio di sostanze, scorie e ossigeno avviene in un ciclo cardiaco che è così composto:
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=0.6cm,text centered, draw=black, fill=white!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=0.6cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=0.6cm, text centered, draw=black, fill=white!30]
+\begin{tikzpicture}[node distance=1cm]
+\node (start) [startstop] {ventricolo sinistro};
+\node (pro1) [process, below of=start] {circolazione sistemica (via Aorta)};
+\node (pro2) [process, below of=pro1] {atrio destro (via Vena Cava)};
+\node (pro3) [process, below of=pro2] {ventricolo destro};
+\node (pro4) [process, below of=pro3] {circolazione polmonare (via Arteria Polmonare)};
+\node (stop) [startstop, below of=pro4] {atrio sinistro (via Vena Polmonare)};
+\path [draw,->](start)--(pro1)--(pro2)--(pro3)--(pro4)--(stop);
+\end{tikzpicture}
+
+
+Il sangue arterioso trasporta l'ossigeno nelle varie parti del corpo mentre quello venoso trasporta le scorie; la quantità di sangue totale in un adulto è di circa 5000-5500ml e viene mantenuta costante: l'84\% di esso fa parte della circolazione sistemica, il 9\% di quella polmonare e il 7\% è contenuto nel cuore. \\
+Inoltre la maggior parte del sangue è concentrato nella parte inferiore del corpo.
+
+Il sistema arterioso è composto da:
+\begin{itemize}
+    \item \textbf{arterie}
+    \item \textbf{arteriole}
+    \item \textbf{capillari (resistenza)}
+\end{itemize}
+qui la pressione varia da 80-120 mmHg e 10-30 mmHg per le arterie sistemiche e polmonari rispettivamente fino a 20-25mmHg e 10mmHg per i capillari sistemici e polmonari.
+Il sangue che arriva nei capillari è \textit{non pulsatile} cioè sostanzialmente privo di oscillazioni (adatto al rifornimento di sostanze nutritive), questo grazie allo smorzamento operato dalla resistenza dalle pareti elastiche delle arterie e arteriole, che avviene principalmente nelle piccole arterie e arteriole della circolazione sistemica.
+
+Mentre quello venoso è composto da:
+\begin{itemize}
+    \item \textbf{Venule}
+    \item \textbf{Vene}(compliance)
+\end{itemize}
+Qui la pressione è di circa 5-10mmHg con bassa pulsatilità e nelle vene è concentrato circa il 65-70\% del volume totale di sangue.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{/home/marco/Documents/graficopressioni.jpeg}
+\label{fig:pressioni}
+\end{figure}
+
+\subsection{Il cuore}
+
+Il cuore è la pompa del sistema cardiocircolatorio ed è composto da quattro camere, divise in due lati:
+\begin{itemize}
+    \item atrio sinistro
+    \item ventricolo sinistro
+    \item atrio destro
+    \item ventricolo destro
+\end{itemize}
+separate da valvole che consentono il flusso in un solo verso; la parte superiore è chiamata \emph{base} e quella inferiore \emph{apice}
+\begin{itemize}
+    \item Vavole atrioventricolari 
+    \subitem  AL \textrightarrow valvola mitrale (2  alette, bicuspide) \textrightarrow VL 
+    \item Valvole semilunari
+    \subitem RA \textrightarrow valvola tricuspide(3 alette) \textrightarrow RV
+\end{itemize}
+mentre non ci sono valvole nel collegamento del sistema venoso e gli atri.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{cuore.jpeg}
+\caption{cuore}
+\label{fig:cuore}
+\end{figure}
+
+Il tessuto muscolare delle pareti del cuore prende il nome di \textbf{miocardio} e siccome gli atri lavorano meno dei ventricoli, essi sono più sottili; infatti:
+\begin{itemize}
+    \item  LA, RA \textrightarrow 2 mm
+    \item RV \textrightarrow 5 mm, LV \textrightarrow 15 mm
+\end{itemize}.
+E' importante notare inoltre che la chiusura e l'apertura delle valvole avviene solamente grazie al gradiente di pressione, ossia non ci sono muscoli atti a questi compiti, con le alette che si sovrappongono tra loro per garantire la chiusura ermetica delle camere.
+
+\subsection{Il ciclo cardiaco}
+Il ciclo cardiaco è composto da diverse fasi:
+\begin{itemize}
+    \item contrazione: \textit{sistole} \textrightarrow  contrazione isovolumica, eiezione. 
+    \item rilassamento: \textit{diastole} \textrightarrow  rilassamento isovolumico, riempimento( 30\% dovuto alla sistole atriale).
+\end{itemize}
+La durata di ogni fase dipende dal ritmo cardiaco, ad esempio durante l'attività fisica la durata della sistole varia:
+\begin{itemize}
+    \item 75 bpm \textrightarrow sistole= 40\% RR
+    \item 210 bpm \textrightarrow sistole= 60\% RR 
+\end{itemize}
+Si considera come \textit{fine sistole} l'istante in cui si chiude la valvola aortica mentre \textit{fine diastole} l'istante della chiusura della valvola mitrale, ciò si può osservare nel grafico sottostante:
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}
+\centering
+\includegraphics[width=.4\linewidth]{/home/marco/Documents/frequenze.jpeg}
+\caption{ciclo cardiaco}
+\end{subfigure}
+
+\begin{subfigure}
+\centering
+\includegraphics[width=.4\linewidth]{cicloPV.jpeg}
+\caption{ciclo su diagramma P-V}
+\end{subfigure}
+\end{figure}
+
+Analogamente, su un diagramma P-V, si può considerare il ciclo cardiaco come un un ciclo termodinamico caratterizzato da una contrazione isovolumica ( il ventricolo non può ancora variare volume) a partire dalla chiusura della valvola mitrale fino all'apertura della valvola aortica seguita dall'eiezione (P cresce fino a un massimo, V scende fino a $V_{LVES}$) fino alla chiusura della valvola aortica (fine sistole). Si ha poi un rilassamento isovolumico (inizio diastole) fino all'apertura della valvola mitrale in cui si ha un riempimento con conseguente incremento di volume fino alla chiusura della suddetta valvola che indica la fine della diastole (il volume qui è $V_{LVED}$.\\
+Si indica con \textit{Stroke Volume} la differenza tra il volume di fine diastole e quello di fine sistole \textrightarrow $SV=V_{LVED}-V_{LVES}$ ed è quello che viene immesso in aorta (per un adulto sano SV=70 ml/battito).\\
+Si definiscono inoltre:
+\begin{itemize}
+    \item \textit{ejection fraction} EF=SV/$V_{LVED}$ x 100 [\%]
+    \item \textit{Cardiac output} CO= SV x HR [l/min]
+    \item \textit{External (stroke) Work} EW=$\oint PdV$ [J]
+\end{itemize}
+
+I segnali di apertura e chiusura delle valvole sono di tipo elettrico, che coinvolgono tutto il miocardio, e i ritardi tra un impulso e l'altro permettono il ciclo cardiaco.
+Il sistema di conduzione si divide in:
+\begin{itemize}
+    \item nodo sinoatriale \textrightarrow situato nell'atrio destro, sancisce l'inizio del battito cardiaco
+    \item nodo atrioventricolare (setto)
+    \item gruppo atrioventricolare \textrightarrow impulso diviso in due: LV e RV
+\end{itemize}
+
+Gli atri sono i primi a contrarsi ( prima il destro e poi il sinistro) durante la sistole atriale (0.1s a 75 bpm) e questo permette il loro svuotamento nei ventricoli; vi è poi la contrazione ventricolare durante la sistole ventricolare \textrightarrow il nodo sinoatriale (veloce) e quello atrioventricolare (lento) non sono dunque in fase.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/ritardi.jpeg}
+\caption{ritardi negli impulsi}
+\label{fig:cuore}
+\end{figure}
+
+Le fibre muscolari del miocardio sono speciali fibre conduttive, con ogni fibra contenente fibrille disposte a strie.
+
+\subsection{Sistema venoso e arterioso}
+
+Il flusso viene considerato laminare sia quando continuo sia quando pulsatile ma in condizioni particolari, ad esempio in condizioni di stenosi arteriosa o durante l'attività fisica il flusso può essere turbolento.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/tabella1.jpeg}
+\caption{caratteristiche sitema venoso e arterioso}
+\label{fig:tabella1}
+\end{figure}
+
+\subsubsection{Arterie}
+Le grandi arterie sono rastremate e caratterizzate da pareti elastiche (flusso pulsatile ad alta pressione) e hanno il compito di distribuire il sangue agli organi e ai muscoli; d'altra parte le piccole arterie sono meno elastiche ma più muscolari e hanno il compito di distribuire il sangue all'interno dei vari organi.\\ Le arteriole sono molto più rigide e, a fronte di un incremento di sezione, riducono la pressione e la portata, controllando il flusso sanguigno in relazione al bisogno dei tessuti, agendo come resistenza periferica grazie alla costrizione e dilatazione dei vasi per mezzo delle pareti muscolari; infine i capillari sono rigidi e senza muscoli, caratterizzati da un flusso lento e continuo per permettere lo scambio di nutrienti e ossigeno. \\
+Le pareti delle arterie sono composte da 3 strati:
+\begin{itemize}
+    \item tunica intima \textrightarrow strato elastico
+    \item tunica media \textrightarrow strato più spesso
+    \item tunica adventitia  \textrightarrow raccordo coi tessuti adiacenti
+\end{itemize}
+e inoltre è garantita la perfetta coincidenza delle aree alle biforcazioni tra arterie, arteriole e capillari (riflessione e propagazione delle onde).
+
+\subsubsection{Vene}
+Le vene sono atte a riportare il sangue al cuore e sono caratterizzate da un flusso a bassa pressione (vi è pulsatilità retrograda solamente in prossimità del cuore) e piccola portata, inoltre sono capaci di variare il volume di sangue trasportato senza alterarne la pressione \textrightarrow \textit{compliance}.
+
+In posizione eretta la pressione venosa nei piedi differisce da quella idrostatica tra RA e piedi a causa della caratteristica di compliance delle vene; sono presenti inoltre valvole che permetttono il flusso in un solo verso (verso il cuore) e che si aprono quando la pressione supera quella del tratto seguente di vena.\\
+Inoltre, a causa della gravità che agisce in posizione eretta, si ha una maggior concentrazione di sangue nei piedi (da 300 a 800 mL) e la pressione nelle gambe raggiunge gli 80-90 mmHg (camminando si riduce grazie alla compressione atta dai muscoli delle gambe \textrightarrow si previene l'accumulo di sangue nelle gambe).
+
+Un'altra importante caratteristica delle vene è la loro distensibilità e capacità di collasso grazie alla minore pressione transmurale (p-$p_e$) rispetto alle arterie \textrightarrow riduzione della sezione senza la completa chiusura del passaggio, utile per contrastare la gravità.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/vene.jpeg}
+\caption{collassabilità delle vene}
+\label{fig:vene}
+\end{figure}
+
+\subsection{Sangue}
+Fluido corporeo atto al trasporto di ossigeno e sostanze nutritive nel corpo \textrightarrow $\rho=1060kg/m^3,\mu=3 \cdot 10^3 Pa \cdot s $, volume totale di circa 5 L.
+Il sangue è composto da:
+\begin{itemize}
+    \item \textbf{Plasma} 55 \% del volume totale (95\% acqua, 6-8\% particelle come proteine, ormoni, elettroliti, ecc.)
+    \item \textbf{Cellule rosse (eritrociti)} che rappresentano il 99\% delle cellulle contenute nel sangue e circa il 40-45\% del sangue (ematocrito). Sono dischi biconcavi dal diametro di 6-8 $\mu m$, volume di $80  \mu m^3$ e densità di $5 \cdot 10^6 eritrociti/mm^3$ e svolgono principalemnte le funzioni di trasporto dell'ossigeno molecolare (il cui mezzo principale è l'emoglobina, una proteina degli eritrociti) e della $CO_2$ disciolta nel sangue. 
+    \item \textbf{Cellule bianche (leucociti)} che sono sferici, importanti per il sistema immunitario
+    \item \textbf{Piastrine (trombociti)} più piccole degli eritrociti e importanti per la coagulazione del sangue.
+\end{itemize}
+
+Il sangue viene trattato come fluido Newtoniano nelle arterie con d>100 $\mu m$ dove è possibile trascurare l dimensione delle particelle presenti e non-Newtoniano nella micro-circolazione (arteriole, capillari, venule).
+
+\subsection{Regolazione cardiovascolare}
+
+La regolazione della pressione del sangue fornisce la normale distribuzione di nutrienti, liquidi, ormoni, elettroliti, ecc. e può essere divisa in due categorie fondamentali:
+\begin{itemize}
+    \item \textbf{regolazione nel breve periodo} (in secondi o minuti) e agisce sul battito cardiaco, contrattilità cardiaca e resistenza vascolare grazie alle informazioni provenienti da
+    \subitem -\textbf{barorecettori} situati nella carotide e nell'arco aortico (zone ad alta pressione)
+    \subitem -\textbf{meccanorecettori} situati nelle vene atriali/polmonari (zone a bassa pressione)
+    \subitem -cromorecettori sensibili al contenuto chimico nel sangue
+    \item \textbf{regolazione del lungo periodo} (minuti/ore/giorni) che agisce sull'attività ormonale e renale e regola il contenuto di acqua e sodio e di conseguenza regolando pressione.
+\end{itemize}
+
+Un esempio di regolazione si ha nel cambio di posizione da sdraiati ad eretti: nell'uomo in posizione supina la differenza di pressione testa-piedi è trascurabile mentre non lo è in posizione eretta (circa 100 mmHg da cuore a piedi) perciò il sistema cardiovascolare agirà in modo fa fornire un flusso sanguigno omogeneo. Rapentini cambi di posizione possono dunque portare a ipotensione ortostatica (svenimento, vertigini, visione annebbiata, nausea, ecc.) similmente a quanto provato dagli astronauti al rientro di missioni nello Spazio dove i recettori si sono abituati ad altre condizioni di pressione.
+
+\subsection{Sistema respiratorio}
+La principale funzione del sistema respiratorio è quella di scambiare gas tra l'ambiente esterno e gli organi/tessuti del corpo, in particolare si ha immissione di $O_2$ presente nell'aria ed espulsione di $CO_2$ e delle altre scorie.\\
+Il percorso che seguono i gas durante lo scambio va dal naso agli alveoli, piccole "sacche" a contatto coi capillari, contenuti nei polmoni, passando per la laringe, la trachea e i bronchi; questo percorso di divide in due macroparti:
+\begin{itemize}
+    \item \textbf{via aerea superiore} \textrightarrow la quale comprende il naso, i seni paranasali e la laringe ed è dedicata al condizionamento dell'aria inalata
+    \item \textbf{via aerea inferiore} composta da trachea, bronchi/bronchioli e alveoli che si ramifica fino all'unità anatomica polmonare
+\end{itemize}
+
+I polmoni sono contenuti in un volume di 4L (capacità polmonare complessiva fino a 7L sotto sforzo), necessari per opsitare $10^8$ alveoli per una superficie di scambio dei gas pari a 90 $m^2$ e sono ricoperti da una membrana chiamata pleura, viscerale e parietale. Nei polmoni si ha ramificazione ad ogni livello:
+\begin{itemize}
+    \item livello da 0 a 19: trasporto (collettori) \textrightarrow a livello 0 si ha solo la trachea
+    \item livello da 20 a 23: scambio \textrightarrow al livello 23 si hanno $8 \cdot 10^6$ ramificazioni
+\end{itemize}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{polmoni.jpeg}
+\caption{polmoni}
+\label{fig:polmoni}
+\end{figure}
+
+\subsection{Ciclo respiratorio}
+Funzione d'interfaccia tra l'ambiente esterno e  il sistema cardiovascolare in cui avviene scambio per \textit{diffusione} d'ossigeno molecolare (presente nell'aria) necessario a livello cellulare (richiesti 260 ml/min) e di anidride carbonica come scoria (160 ml/min).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/cicloresp.jpeg}
+\caption{ciclo respiratorio}
+\label{fig:ciclo respiratiorio}
+\end{figure}
+ \subsubsection{Ventilazione}
+ La ventilazione naturale è simile al funzionamento di un soffietto, attivata dai muscoli del diaframma e intercostali: le forze agenti sull'interstizio sono trasmesse ai polmoni e quindi agli alveoli.
+ \begin{itemize}
+     \item \textbf{inspirazione (naso \textrightarrow alveoli} il torace forza ogni alveolo ad espandersi e, grazie alla caduta di pressione provocata, l'aria entra nelle vie respiratorie.
+     \item \textbf{espirazione alveoli \textrightarrow naso} la forza elastica di richiamo permette all'aria di uscire e le forze interstiziali impediscono agli alveoli di collassare. 
+ \end{itemize}
+ 
+ \newpage
+ 
+ \subsubsection{Diagramma respiratorio}
+ Il volume di aria totale, per ogni respiro, prende il nome di \textbf{volume corrente} edè pari a 0.5L a riposo di cui 0.35L prendono parte allo scambio di gas; questo porta ad un volume necessario di 5.25L/min di aria.\\
+ Si definiscono inoltre:
+ \begin{itemize}
+     \item volume di riserva in inspirazione: 3L
+     \item volume di riserva in espirazione: 1L
+     \item volume residuale: volume residuo alla fine della respirazione: 1.5-2L
+     \item capacità polmonare totale: capacità vitale + volume residuale
+ \end{itemize}
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/diagrammaresp.jpeg}
+\caption{diagramma respirazione V/t}
+\label{fig:diagramma resp}
+\end{figure}
+
+\subsubsection{Circolazione polmonare e bronchiale}
+
+Si distingue:
+\begin{itemize}
+    \item  \textbf{circolazione polmonare} sangue deossigenato dal ventricolo destro agli alveoli per la rimozione di $CO_2$ e e l'ossigenazione prima di tornare all'atrio sinistro ed essere infine distribuito al corpo \textrightarrow il letto capillare polmonare ricopre un'area di 80 $m^2$ e occupa un volume di 70ml a riposo per arrivare fino a 200 ml sotto sforzo
+    \item \textbf{circolazione bronchiale} parte del sangue della circolazione sistemica dell'aorta va ai polmoni attraverso tre arterie bronchiali; 1/3 torna attraverso le vene bronchiale e 2/3 attraverso l'atrio sinistro.
+\end{itemize}
+
+\subsubsection{Scambio di gas attraverso sangue e polmoni in condizioni normali}
+
+Lo scambio di  avviene solamente per diffusione (non c'è dunque un gradiente di pressione) attraverso una membrana spessa 0.2 $\mu m$ che collega alveoli e capillari e permette un rapido scambio di $O_2$ e $CO_2$; sono presenti circa 1800 per alveolo un totale di 150 milioni di alveoli.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{/home/marco/Documents/alveoli.jpeg}
+\caption{scambio di gas tra alveoli e capillari}
+\label{fig:scambio}
+\end{figure}
+
+I polmoni si comportano come una molla sopsesa nella parte superiore del torace a contatto nella parte inferiore col diaframma (la deformazione varia nella parte superiore e inferiore) e in condizioni normale (sulla Terra) essi risentono della pressione idrostatica che porta gli alveoli inferiori a riempirsi meno; è importante notare che la respirazione autonoma non è influenzata dalla gravità.
+
+\subsection{Emodinamica}
+
+\subsubsection{Richiami di fluidodinamica}
+In emodinamica si considera il sangue come un fluido viscoso non-Newtoniano, ossia che risponde alla legge di Newton, nella grande circolazione e Newtoniano nella microcircolazione (il plasma potrebbe essere considerato Newtoniano). \\
+La viscosità del sangue dipende principalmente da:
+\begin{itemize}
+    \item viscosità del plasma e delle cellule rosse (eritrociti)
+    \item dimensioni delle cellule rosse e dei condotti
+\end{itemize}
+
+
+Nei fluidi Newtoniani (grande circolazione) c'è una relazione lineare tra lo sforzo di taglio $\tau$, misurata in $[N/m^2]$, e il rapporto tra la velocità di taglio e la larghezza del condotto $\gamma$, misurata in  $[s^{-1}]$. Il fattore di proporzionalità è chiamato viscosità dinamica $\mu$ misurata in $[Pa \cdot s]$ mentre nei non-Newtoniani la viscosità dipende sia dallo sforzo che dalla velocità di taglio (importante per la microcircolazione).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{/home/marco/Documents/viscosita.jpeg}
+\caption{diagramma sforzo di taglio/velocità di taglio}
+\label{fig:viscosita}
+\end{figure}
+
+
+Le ipotesi del flusso di Hagen-Poiseuille sono di flusso laminare e stazionario, fluido viscoso, incompressibile e Newtoniano; inoltre il condotto deve avere lunghezza e rigidezza infinita e sezione circolare costante (vero per le arterie ma non per le vene a causa del compliance).
+Il modello di flusso di Hagen-Poiseuille è applicabile come approssimazione per determinare la relazione tra caduta di pressione e resistenza idraulica ma è importante notare che il profilo parabolico tipico di questo flusso non si sviluppa nelle arterie siccome la \textit{entry region} è minore della lunghezza del vaso ($l_{inlet}$<$L_{vessel}$); si sviluppa invece nei vasi curvi e ramificati dove $l_{inlet}$=0.06 Re D.
+ La relazione tra caduta di pressione e resistenza è dunque
+ \begin{equation}
+     \begin{split}
+         R=\frac{8 \cdot \mu L}{\pi r_i^4} [mmHg \cdot s/ml]\\
+         R=\frac{\Delta P}{Q} \rightarrow Ohm's Law
+     \end{split}
+ \end{equation}
+ 
+ L'equazione di Bernoulli, o conservazione dell'energia, viene qui richiamata in quanto di grande utilità in ambito emodinamico ad esempio per l'analisi di stenosi.
+ \begin{equation}
+     p + \frac{1}{2} \rho v^2 + \rho g z= cost.
+ \end{equation}
+ dove 'p' è il termine di energia meccanica, $\frac{1}{2} \rho v^2$ è quello di energia cinetica e $\rho g z$ quello di energia gravitazionale.\\
+ In condizioni di stenosi ad esempio, la valvola si apre molto poco rispetto a quella che è l'area del ventricolo ($A_v$<<$A_s$) e tramite l'eq. di Bernoulli è possibile, congiuntamente all'eq. di continuità, stimare il gradiente di pressione $\Delta P=P_v-P_s=4V_s^2$ e quindi la gravità della stenosi.  
+ 
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{/home/marco/Documents/Bernoulli.jpeg}
+\caption{esempio eq. Bernoulli}
+\label{fig:Bernoulli}
+\end{figure}
+
+\subsubsection{Resistenza}
+
+Si modellizza la resistenza idraulica attraverso la legge di Poiseuille e si utilizza la legge di Ohm per correlare la caduta di pressione e la portata:
+\begin{equation}
+    \begin{split}
+        R_{tot}=R_1+R_2 \rightarrow resistenze\ in\ serie(Q_{tot}=Q_1=Q_2,\Delta P_{tot}=\Delta P_1+ \Delta P_2)\\
+        R_{tot}=\frac{1}{R_1}+\frac{1}{R_2} \rightarrow resistenze\ in\ parallelo\ (Q_{tot}=Q_1+Q_2,\Delta P_{tot}=\Delta P_1= \Delta P_2)
+    \end{split} 
+\end{equation}
+Ad esempio $R_{arteriole}/R_{arterie}=3 \cdot 10^10$ ma ci sono $3 \dot 10^8$ arteriole in parallelo per cui $R_{tot,arteriole}=100 \cdot R_{aorta}$ e per la legge di Poiseuille ciò vale anche per la caduta di pressione.\\
+La resistenza totale dei capillari invece circa il 15\% di quella totale siccome, pur avendo singolarmente la resistenza pari a quella di un'arteriola, vi sono solamente 4-5 capillari per arteriola; per quanto riguarda le vene, esse contribuiscono per il 5\% del totale alla resistenza.
+
+\subsubsection{Inertanza}
+L'inertanza L mette in relazione la caduta di pressione con l'accelerazione del flusso ed è l'equivalente idraulico dell'induttanza nei circuiti elettrici. Essa può essere ricavat da:
+\begin{equation}
+    F=m \cdot a= m \cdot dv/dt \leftrightarrow \Delta P \cdot A =\rho \cdot A \cdot l \cdot dQ/dt
+\end{equation}
+si ha quindi la legge di Newton
+\begin{equation}
+    \Delta P= L \cdot dQ/dt
+\end{equation}
+
+per cui $L=\rho \cdot l/A$ misurata in $[mmHg \cdot s^2/ml]$.\\
+L'inertanza segue il comportamento della reistenza per quanto riguarda la serie e il parallelo, inoltre $R \sim{r_i^4} e L \sim{r_i^2}$ quindi l'inertanza ha rilevanza per i grandi vasi mentre è vero il contrario per i piccoli vasi.
+
+\subsubsection{Flusso oscilatorio e profili di velocità}
+
+Per il flusso oscillatorio valgono le stesse ipotesi del flusso di Poiseuille con l'introduzione di un gradiente di pressione sinusoidale con frequenza $\omega=2 \pi f$ \textrightarrow il flusso è laminare ma pulsatile e il profilo di velocità non è più parabolico ma sinusoidale.\\
+Si introduce quindi il parametro di Womersley, simile al numero di Reynolds per i flussi non pulsatili:
+\begin{equation}
+    \alpha^2=\frac{r_i^2 \omega \rho}{\mu}
+\end{equation}
+dove $\alpha$ esprime l'importanza degli effetti inerziali rispetto a quelli viscosi, si distingue quindi
+\begin{itemize}
+    \item $\alpha< 3$ (bassi f, $r_i$ piccoli) \textrightarrow effetti viscosi importanti, profilo parabolico, legge di Poiseuille applicabile; vero per i flussi periferici.
+    \item $3<\alpha<10$ \textrightarrow effetti viscosi e inerziali presenti, profilo più piatto e con massimo non nel centro, effetti di R e L; vero per vasi medi.
+    \item $\alpha>10$ (alti f, grandi $r_i$) \textrightarrow effetti inerziali prevalenti, profilo piatto, legge di Newton applicabile; valido per grandi arterie.
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{/home/marco/Documents/profilivel.jpeg}
+\caption{profili di velocità al variare di $\alpha$}
+\label{fig:profilivel}
+\end{figure}
+
+\subsubsection{Elasticità}
+
+L'elasticità lega lo sforzo e la deformazione e se lineare si ha la legge di Hooke 
+\begin{equation}
+    \sigma=E \cdot \epsilon
+\end{equation}
+
+con E modulo di Young che è una proprietà del materiale. \\
+Per il materiale biologico il modulo di Young cresce al crescere della deformazione e dello sforzo (non lineare) per cui ci si riferirà ad esso come $E_{inc}$.
+Inoltre, siccome il materiale presenta sia caratteristiche di elasticità che di viscosità (\textbf{viscoelasticità}) occorre definire un modulo elastico dipendente dal tempo \textrightarrow modulo elastico complesso per sforzi e deformazione in condizioni di pulsatilità.\\
+L'energia di deformazione, poi, non è più unica e si ha un ciclo d'isteresi con una perdita d'energia dovuta proprio alla viscosità del materiale.
+
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.5]{/home/marco/Documents/Ecomplesso.jpeg}
+\caption{modulo elastico complesso}
+\label{fig:Ecomplesso}
+\end{figure}
+
+\subsubsection{Compliance ed Elastanza}
+
+Determinano le relazioni tra volume e pressione e sono definite come:
+    \begin{align*}
+        C & =\frac{\Delta V}{\Delta P} \rightarrow   \text{[ml/mmHg] Compliance}\\
+        E & =\frac{\Delta P}{\Delta V} \rightarrow  \text{[mmHg/ml] Elastanza} \\
+        E & =\frac{1}{C}
+    \end{align*}
+
+
+Si ha una relazione biunivoca: quando V cresce a seguito di una variazione di pressione si utilizza la compliance (per i vasi sanguigni) mentre quando P cresce a seguito di una variazione di volume si utilizza l'elastanza (cuore dove c'è contrattilità).\\
+La compliance è un quantitativo delle proprietà meccaniche e strutturali (si utilizza l'Area Compliance per i vasi $C_A \propto \frac{k \pi r_i^3}{E_{inc}h}$ dove h è lo spessore della parete e k un fattore adimensionale pari a circa 1.5), infatti ad esempio le vene e le arterie, pur avendo $E_{inc}$ simile, il rapporto $r_i^3/h$ è diverso e ciò comporta proprietà meccanico-strutturali differenti.
+L'elastanza può essere misurata nei ventricoli da misure di P e V mentre la compliance delle arterie attraverso misure di P.
+Adimensionalizzando si possono definire K=C/V \textrightarrow distensibilità e BM=E*V [mmHg] \textrightarrow bulk modulus.
+
+
+Per la serie (di elastanza e compliance) vale quanto segue:
+\begin{equation}
+    \begin{split}
+        E_{tot}=E_1+E_2 
+        1/C_{tot}=1/C_1+1/C_2
+        Q_{tot}=Q_1=Q_2, \Delta P_{tot}=\Delta P_1 +\Delta P_2, \Delta V_{tot}=\Delta V_1=\Delta V_2
+    \end{split}
+\end{equation}
+
+Per il parallelo invece si ha
+\begin{align*}
+    \Delta P_{tot} &=\Delta P_1=\Delta P_2\\
+    \Delta V_{tot} &=\Delta V_1+ \Delta V_2 \\
+    \frac{1}{E_{tot}} &=\frac{1}{E_1}+\frac{1}{E_2}
+\end{align*}.
+
+\subsection{Emodinamica cardiaca}
+
+\subsubsection{Relazione pressione-volume}
+
+La relazione tra pressione e volume nei ventricoli determina l'elastanza del cuore, o funzione della pompa cardiaca. \\
+ESPVR   \textrightarrow connettendo i punti di fine sistole per vari cicli PV si ha l'elastanza massima ($E_{max}$) che è misura della contrattilità cardiaca e $V_d$ è il volume a riposo del ventricolo. La successione di cicli è possibile grazie al meccanismo di Frank-Stirling: la stessa elastanza massima viene raggiunta cambiando il volume di contrazione isovolumica o la pressione di eiezione \textrightarrow se $V_{LVED}$ ci sarà un corrispondente aumento di stroke volume (connettendo i punti dei cicli PV con una retta si ha che la pendenza è l'elastanza in quell'istante siccome E=E(t)).
+
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/relazPV.jpeg}
+\caption{relazione pressione-volume}
+\label{fig:relazione volume pressione}
+\end{figure}
+
+L'elastanza dei muscoli cardiaci varia da un minimo a fine diastole ad un massimo a fine sistole, inoltre essa varia indipendentemente dal precarico.\\
+Si è osservato inoltre che la curva di $\frac{E(t)}{E_{max}}$/$t_{peak}$ è simile in tutti i mammiferi (incluso l'uomo) e indipendente dalle malattie; d'altra parte il valore di elastanza massimo e il tempo a cui si verifica identifica lo stato di salute del soggetto.
+
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{Emax.jpg}
+\caption{Elastanza per diversi animali}
+\label{fig:Emax}
+\end{figure}
+
+\subsubsection{ Indici di consumo d'ossigeno e lavoro cardiaco}
+
+Come visto in precedenza si può definire il lavoro cardiaco e nel ciclo PV questo rappresenta l'area racchiusa dal ciclo stesso; la potenza sarà quindi definita come il prodotto tra pressione e portata aortica $P(t)  \cdot Q(t)$. Integrando la potenza su un ciclo cardiaco $\int_{RR} P(t) \cdot Q(t) dt$[J] si ha l'energia totale per ciclo e dividendo per per RR quella media, generate solo durante la fase di eiezione.
+
+Si possono dunque definire gli indici di consumo d'ossigeno, dipendenti principalmente da HR e dalla tensione dei muscoli cardiaci indicando valori tipici per un adulto sano:
+
+\begin{itemize}
+    \item Rate pressure product $RPP=HR \cdot P_{syst}$[mmHg/min] \textrightarrow $8.5 \cdot 10^3$ [mmHg/min] a 70 bpm
+    \item Tension Time index per minute: TTI/min=$P_{LV,mean} \cdot RR \cdot HR$ dove $P_{LV,mean}=1/RR \cdot int_{RR}P_{LV}(t)dt$ che è circa l'area verde più rossa nella figura sottostante \textrightarrow $2.5 \cdot 10^3$[mmHg s/min] a 70 bpm.
+    \item area PV per minuto: PVA=(PE+EW) HR [J/min] dove PE=$P_{LVES}\cdot (V_{LVES}-V_d-P_{LVED}\cdot(V_{LVES}-V_d)/2$ è l'energia elastica potenziale \textrightarrow 90[J/min] a 70 bpm.
+    \item Efficienza ventricolare EW/PVA \textrightarrow 0.75 a 70 bpm.
+\end{itemize}
+
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/indiciox.jpg}
+\caption{Indici di consumo d'ossigeno}
+\label{fig:Indiciox}
+\end{figure}
+
+\subsubsection{Emodinamica delle arterie}
+
+Siccome i vasi sono elastici si creeranno onde di pressione durante il ciclo cardiaco per cui è possibile definire $c=\Delta x/\Delta t$ dove $\Delta x$ è la distanza percorsa dall'onda e $\Delta t$ il tempo impiegato siccome la trasmissione non è istantanea. \textrightarrowè importante ricordare che la velocità d'onda non è quella del flusso sanguigno e in generale  questa è molto maggiore di quella del flusso per cui non si considera l'interazione tra le due.
+La velocità d'onda è, per l'equazione di Moens-Krorteweg: \begin{align*}
+    c=\sqrt{\frac{h E_{mc}}{2 r_i \rho}}=\sqrt{\frac{A}{\rho c_A}}
+\end{align*}
+dove A è l'area della sezione, $C_A$ la compliance in A, h lo spessore e $E_{inc}$ la rigidezza locale. \textrightarrow in un'aorta sana c=5 m/s; c è maggiore in arterie periferiche siccome $h/r_i, E_{inc}$ sono più grandi e maggiore in genere per le arterie siccome $h/r_i $ è maggiore ma $E{inc}$ è simile. \textrightarrow por determinare la velocità d'onda si può utilizzare il metodo piede-piede in cui si misura il ritardo nell'aumento di pressione da un piede all'altro in punti prestabiliti.
+
+Si può definire la velocità di fase come la velocità che l'onda avrebbe se non ci fossero riflessioni sulle pareti, cioè dipendente solo dal mezzo (proprietà dei vasi e densità sanguigna). \textrightarrow la riflessione determina un aumento dell'ampiezza dell'onda ed è dovuta principalmente a biforcazioni, non-linearità e restringimento del condotto; saranno quindi maggiori le riflessioni a livello di arteriole e capillari dove ci sono molte biforcazioni (\textit{riflessione diffusa}).
+Si ha invece \textit{distinta} lungo l'aorta ed è possibile definire l'\textbf{Augmentation Index} AI=AP/PP dove AP è la pressione aumentata e $PP=P_{syst}-P_{dias}$. 
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/AI.jpg}
+\caption{Augmentation index}
+\label{fig:AI}
+\end{figure}\\
+Analizzando la riflessione si nota che l'onda che avanza ha la stessa fase sia per il flusso che per la pressione mentre quella riflessa (retrograda) è in fase per la pressione e in opposizione per il flusso (hanno comunque la stessa velocità).
+
+ \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.25]{/home/marco/Documents/riflessione.jpg}
+\caption{Riflessione dell'onda di pressione e del flusso}
+\label{fig:riflessione}
+\end{figure}
+
+La pressione e il flusso risultanti saranno quindi la somma tra quelli in avanti e retrogrado e la relazione tra le due grandezze è:
+\begin{align*}
+    P_f & =Z_c \cdot Q_f \\
+    P_b & =-Z_c \cdot Q_b  \text{ siccome il flusso é riflesso nel verso opposto }
+\end{align*}
+
+dove $Z_c$ é l'impedenza caratteristica del vaso e puó essere definita come
+\begin{align*}
+    Z_c=\sqrt{Z_l \cdot Z_t}\\
+    Z_l= i \omega L'+R' \\
+    Z_t=\frac{1}{i \omega C_A}
+\end{align*}
+con $Z_l$ e $Z_t$ impedenze longitudinali e trasversali; si puó notare inoltre che:
+\begin{itemize}
+    \item nell'aorta e nei condotti larghi il numero di Womersley é alto per cui $Z_c= \sqrt{\frac{L'}{C_A}}=\frac{\rho \cdot}{A}$ é un numero reale.
+    \item per i vasi medi $Z_c$ é un numero complesso.
+    \item per i vasi pi piccoli dove il numero di Womersley é basso $Z_c$ é puramente immaginaria.
+\end{itemize}
+
+É possibile scomporre l'impedenza nei seguenti modi:
+\begin{itemize}
+\item se $Z_c$ é reale \textrightarrow 
+\begin{align*}
+P_f=\frac{P_m+Z_c \cdot Q_m}{2} \\
+P_b=\frac{P_m-Z_c \cdot Q_m}{2}
+\end{align*}
+\item se $Z_c$ é complessa allora si puó effettuare una decomposizione nel dominio della frequenza attraverso un'analisi di Fourier
+\end{itemize}
+
+L'impedenza descrive completamente il sistema attraverso la resistenza periferica $R_p$, la compliance arteriosa totale C e l'impedenza caratteristica dell'aorta $Z_c$. L'impedenza totale puó essere stimata dal modulo di quella che si ha ad alte frequenze (siccome non ci saranno riflessioni nelle arterie l'impedenza totale sará quasi solo determinata da $Z_c$, con le onde di pressione e di portata con forme uguali).
+Si possono quindi definire i seguenti indici:
+\begin{itemize}
+\item RM=$P_b/P_f$
+\item RI=$P_b/(P_f+P_v)$ \textrightarrow buona misure dell'ampiezza della riflessione totale (mentre AI, essendo derivata dall'ampiezza totale senza separazione non é una buona misura)
+\end{itemize}  
+che sono rapporti delle ampiezze.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/indiciriflessione.jpg}
+\caption{Indici di riflessione e d'impedenza}
+\label{fig:indiciRIRM}
+\end{figure}
+
+\subsubsection{Modello di Winkessel}
+
+Il modello di Winkessel é una descrizione a parametri concentrati, di dimensione 0 dove t (tempo) é la variabile indipendente mentre P (pressione), V(volume) e Q(portata) sono le variabili dipendenti \textrightarrow si ha un'analogia elettrico-idraulica con 2 o 4 elementi; si ha dunque la risposta cardiovascolare globale tramite un set di equazioni differenziali senza i dettagli spaziali e le informazioni relative alla propagazione dell'onda. \\
+Le funzioni arteriose quali pressioni, volumi ventricolari e atriali possono essere stimate da un modello mono-compartimento (singolo circuito analogo) o da un modello multi-compartimento (combinazione di circuiti RLC).
+Si hanno dunque le relazioni caratteristiche viste in precedenza a cui si aggiungono le equazioni di conservazione:
+\begin{align*}
+R &=\frac{\Delta P}{Q}, \Delta P=L\frac{dQ}{dt}, C=\frac{\Delta V}{\Delta P} \\
+\frac{dQ_1}{dt} & =\frac{P_1-P_2-R \cdot Q_1}{L} \\
+\frac{dV_1}{dt} & =Q_0-Q_1 \\
+\frac{dP_1}{dt} & =\frac{1}{C}\frac{dV_1}{dt}
+\end{align*}
+
+\subsubsection{Modelli multiscala e distribuiti}
+
+I modelli a parametri distribuiti prevedono un'analisi  1-D in cui t e x(coordinata spaziale) sono le variabili indipendenti mentre A(area), P(pressione), Q(portata) sono le variabili dipendenti: le arterie sono suddivise in piccoli segmenti cilindrici.\\
+Quest'analisi si traduce in un set di equazioni iperboliche alle derivate parziali con risoluzione spaziale maggiore e informazione sulla trasmissione e propagazione delle onde. 
+Le equazioni di governo qui sono:
+\begin{align*}
+\frac{\partial A}{\partial t}+ \frac{\partial Q}{\partial r}=0 &\text{ equazione di continuitá}\\
+\frac{\partial Q}{\partial t}+ \frac{\partial}{\partial x}(\frac{Q^2}{A})=-\frac{A}{\rho} \frac{\partial P}{\partial x} -2 \pi r_i \frac{\tau}{\rho} &\text{ é lo sforzo di taglio a parete} \\
+P= f(A) &\text{ equazione di continuitá}
+\end{align*}
+
+
+
+Il modello multiscala é quindi una combinazione di modelli di differenti dimensioni (e.g. 0D-1D,1D-3D ecc..) in cui i modelli a dimensione minore possono esserre utilizzati come condizioni al contorno (e.g. 0D-1D \textrightarrow 1D per le arterie e 0D per la circolazione periferica e il cuore).
+
+\subsection{Condizioni ambientali estreme}
+
+\subsubsection{Esercizio fisico}
+
+Il dispendio di energia giornaliero é dato dalla somma del metabolismo basale (65-70\%), dell'effetto termogenico del cibo (10\%) e dall'effetto termico dell'attivitá fisica (15-30\%).  \\
+Buona parte dell'energia spesa é quella per il consumo d'ossigeno e si puó definire il \textbf{MET} (Metabolic Equivalent of Task) che é la quantitá d'ossigeno spesa a riposo per kg di peso corporeo e puó essere utilizzato come misura dell'energia spesa durante l'esercizio fisico.
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/MET.jpg}
+\caption{MET}
+\label{fig:MET}
+\end{figure}
+
+Le fibre muscolari che intervegono durante l'esercizio fisico sono di  2 tipi:
+\begin{itemize}
+\item \textbf{tipo I} \textrightarrow fibre lente ma resistenti alla fatica
+\item \textbf{tipo II} \textrightarrow fibre piú rapide nell'attivazione ma meno resistenti alla fatica
+\end{itemize}
+Si puó quindi definire il \textit{Lactate Threshold} (LT) come il limite in percentuale di $VO_2$ max per cui la contrazione dei muscoli viene sensibilmente ridotta e dipende da processi metabolici/chimici.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{/home/marco/Documents/LT.jpg}
+\caption{Lactate threshold}
+\label{fig:LT}
+\end{figure}
+
+Durante l'attivitá fisica inoltre la ventilazione aumenta da 6L/min a 120L/min e la gittata cardiaca da circa 5L/min a 25L/min con maggior concentrazione del sangue nei muscoli grazie all'attivitá dei barorecettori; inoltre si ha maggior consumo d'ossigeno, vasodilatazione periferica (riduzione della resistenza), aumento del tono vascolare arterioso/venoso con incremento della pressione arteriosa e aumento degli effetti inotropici (SV cresce)) e cronotropici (HR cresce). \\
+Per effetto di allenamenti mirati, con carichi di lavoro adeguati e con sovraccarico progressivo é possibile migliore  parametri come il Lactate Threshold, il CO, la biomeccanica e il battito a riposo.
+
+\subsubsection{Condizioni di Stress}
+
+L'omeostasi é la condizione di equilibrio interno dinamico che si raggiunge al variare delle condizioni ambientali; lo \textbf{Stress} é considerato qualunque disturbo all'omeostasi e puó essere di tipo psicosociale (scenari reali o immaginari) o biogenico (dovuto ad agenti come anfetamine, nicotina, ecc..). Le risposte che l'organismo puó sviluppare sono di tipo psicologico (ansia, depressione, aggressivitá)o biologico per cui si puó sviluppare il diagramma sottostante:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/Documents/rispstress.jpg}
+\caption{Risposta allo stress}
+\label{fig:rispstress}
+\end{figure}
+
+
+La condizione di Fight-or-Flight indica la \textbf{risposta acuta} allo stress per cui si deve decidere se affrontare la causa o fuggire ed é il momento in cui vengono rilasciati gli ormoni dello stress con le principali conseguenze che sono:
+\begin{itemize}
+\item aumento dell'energia disponibile ai muscoli e al cervello 
+\item attivazione del sistema immunitario
+\end{itemize}
+
+La \textbf{risposta allo stress cronico} invece si manifesta con aumento della depressione, malattie cardiovascolari (ipertensione cronica, malattie coronariche, ecc..) e del sistema immunitario ( eccessiva, vulnerabilitá alle infezioni).
+
+\subsubsection{Ambiente terrestre e marino}
+
+Negli organismi endotermici (come l'uomo) la temperatura rimane costante (37 $^oC$) indipendentemente dall'ambiente esterno e si ha condizione di ipotermia sotto i $35.5 ^oC$
+e ipertermia oltre i $37.5 ^oC$; il core, che comprende gli organi e la testa, ha una temperatura di $37 ^oC$ e puó cedere o assorbire calore dallo shell (il resto del corpo) per mantenerla per mezzo della conduzione.
+
+
+La produzione di calore interna avviene tramite il metabolismo, trasformando energia chimica (parte diventa lavoro meccanico).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/scambiocalore.png}
+\caption{Scambio termico con l'ambiente}
+\label{fig:scambio_termico}
+\end{figure}
+
+Per quanto riguarda invece lo scambio con l'ambiente esterno questo puó avvenire per:
+\begin{itemize}
+\item Convezione \textrightarrow scambio attraverso lo strato limite di pochi mm presente sulla pelle.
+\item Conduzione \textrightarrow contatto diretto tra la pelle e oggetti molto conduttivi
+\item radiazione \textrightarrow ricopre il ruolo piú importante e avviene per emissione di onde elettromagnetiche nell'infrarosso
+\item evaporazione \textrightarrow transizione da liquido a vapore del sudore che assorbe calore dalla pelle
+\end{itemize}
+
+La termoregolazione avviene grazie ai termorecettori presenti nell'ipotalamo permettendo di mantenere costante la temperatura corporea attraverso:
+\begin{itemize}
+\item quando la temperatura aumenta oltre il punto prestabilito si ha vasodilatazione nella shell e aumento della gittata cardiaca con riduzione della pressione arteriosa e del volume di sangue nel core; inoltre si ha un aumento della sudorazione.
+\item quando la temperatura scende al di sotto del punto prestabilito vi é vasocostrizione dei vasi della shell, piloerezione dei peli in modo da aumentare lo strato limite e aumento della produzione di calore attraverso il tremolio degli arti.
+\end{itemize}
+
+La mancata efficacia di questi metodi di regolazione, i.e. condizioni troppo estreme, comporta condizioni di:
+\begin{itemize}
+\item ipotermia \textrightarrow eccessiva riduzione della temperatura corporea (tra i 24 e i 35$^oC$) con conseguente riduzione dell'attivitá cardiaca e respiratoria, metabolica (shutdown protettivo) e attivitá cerebrale rallentata
+\item ipertermia \textrightarrow temperatura corporea al di sopra dei $41 ^oC$ in cui gittata cardiaca aumentata per lunghi periodi puó portare a crampi, collassi  ed infarti a causa della regolazione inefficace che inibisce la vasodilatazione
+\end{itemize}
+
+\paragraph{Effetti della pressione}
+La densitá dell'aria e la pressione diminuiscono con l'altezza secondo le leggi:
+\begin{align*}
+\text{Troposfera} \rightarrow p=p_0 (\frac{T}{T_0})^{\frac{g}{R \cdot \Gamma}},\rho=\rho_0 (\frac{T}{T_0})^{\frac{g}{R \cdot \Gamma}}
+\text{Bassa Troposfera} \rightarrow p=p_0 e^{-\frac{g(z-z_0)}{R \cdot T_0}}, \rho=\rho_0 e^{-\frac{g(z-z_0)}{R \cdot T_0}}, T=T_0 \sim{218 K}
+\end{align*}
+La pressione parziale dell'ossigeno scende da 159 mmHg del livello del mare ai 18 mmhg a 15 km d'altezza cosí come scende la pressione di vapore dell'acqua.
+
+\paragraph{Effetti dell'altitudine sul corpo umano}
+Con l'altitudine ci possono essere problemi di ipossia a causa della ridotta pressione parziale dell'ossigeno per cui la saturazione viene meno, la ventilazione polmonare raddoppia (per far fronte alla minore quantitá d'ossigeno introdotta ad ogni respiro) e si ha attivitá cardiovascolare aumentata. Si ha completo adattamento del sistema respiratorio nel lungo periodo fino ad un'altitudine di circa 5 km s.l.m.; oltre la zona di adattamento incompleto (ca. 5500 m) l'acclimatazione non é possibile (ossigeno puro é necessario oltre i 7000m con iperventilazione oltre i 12 km). 
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{/home/marco/Documents/coreT.jpg}
+\caption{Temperature di core e shell}
+\label{fig:coreT}
+\end{figure}
+Le patologie dovute all'altitudine possono essere:
+\begin{itemize}
+\item ridotta capacitá di svolgere compiti direttamente proporzionale alla riduzione dell'ossigeno
+\item malditesta innescati dall'ipossia
+\item mal di montagna innescato dall'iperventilazione, ossia il disequilibrio tra gas introdotti ed espulsi a causa di edema interstiziale \textrightarrow puó portare a malditesta, affaticamento, nausea, difficoltá nel dormire, sintomi gastrointestinali che smettono con un decremento d'altitudine ma possono avere gravi conseguenze se l'esposizione é prolungata
+\item edema polmonare acuto \textrightarrow l'ipossia genera vasocostrizione polmonare (ridistribuzione del flusso sanguigno alle regioni ben ventilate in modo da mantenere lo scambio efficiente) e anche globale ossia incremento della resistenza vascolare che portano a disfunzioni polmonari
+\item edema cerebrale acuto \textrightarrow la vasodilatazione delle arteriole cerebrali a causa dell'ipossia incrementa la pressione dei capillari che potrebbero iniziare a sanguinare nel tessuto cerebrale, manifestando disorientamento e disfunzioni cerebrali.
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/quotaadattamento.png}
+\caption{quota d'adattamento}
+\label{fig:quotaadatt}
+\end{figure} 
+\paragraph{Effetti della pressione dell'acqua sul corpo umano}
+Ricordando la legge di Boyle (pV=costante, siccome la temperatura viene regolata dal corpo) e la legge di Henry ( a una certa T, la concentrazione di un gas disciolto in un liquido é direttamente proporzionale alla pressione parziale del gas in soluzione, i.e. p=k*c) si puó analizzare la risposta del corpo all'immersione in acqua, tenendo conto che i sistemi sensoristici della vista e dell'udito sono alterati (la luce viene rifratta dall'acqua e le onde acustiche viaggiano 4 volte piú veloce). \\
+Nelle immersioni in \textit{apnea} il numero di particelle rimane costante siccome se la pressione raddoppia il volume dei polmoni dimezza; l'azoto molecolare inoltre non é solubile a livello atmosferico ma immergendosi il galleggiamento diminuisce e $N_2$ e $O_2$ iniziano a disciogliersi nei tessuti (a causa della legge di Henry) che peró non si sovrassaturano siccome non vengono introdotte altre particelle dall'esterno e l'immersione dura comunque pochi minuti: non ci sono problemi legati alla decompressione dell'azoto durante le ascese rapide ma a causa del repentino aumento di volume potrebbero esserci scompensi nella pressione parziale dell'ossigeno con possibili blackout da ipossia e perdita di conoscenza.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{/home/marco/effettipressione.png}
+\caption{Effetti dell'immersione sul corpo umano}
+\label{fig:effetti_press}
+\end{figure}
+Nelle immersioni SCUBA (immersioni con sistema a circuito aperto riempito da gas pressurizzato) é presente un sistema BCD (Buoyancy Control Device) per la regolazione del galleggiamento ed é necessaria una decompressione a piú fasi durante la risalita. \\ Qui il numero di particelle raddoppia se la pressione dell'aria inspirata raddoppia e il volume dei polmoni resta costante. 
+L'azoto disciolto nei tessuti dopo un lungo periodo in immersione, durante l'ascesa, inizia ad evaporare ( la pressione parziale scende al di sotto della pressione di vapore, legge di Henry) nel flusso sanguigno e si possono verificare i seguenti casi:
+\begin{itemize}
+\item se l'ascesa é lenta l'azoto lascia i tessuti quando questi non hanno piú spazio per contenerlo (a causa dell'espansione) e, attraverso il sangue, viene trasportato ai polmoni dove verrá espulso
+\item se l'ascesa é rapida l'eccesso di azoto non riesce ad essere smaltito correttamente causano il blocco del flusso sanguigno e danni ai tessuti ( la dimensione delle bolle raddoppia ogni 10 m)
+\end{itemize} 
+Le patologie che possono svilupparsi in ambiente iperbarico sono:
+\begin{itemize}
+\item Barotrauma \textrightarrow rapida variazione di pressione che puó portare al collasso dei tessuti in cui é presente dell'aria; é possibile prevenirla con la manovra di Valsalva
+\item Narcosi da azoto \textrightarrow la concentrazione di azoto nei tessuti cresce al punto di arrivare a saturazione provocando narcolessia ed effetti anestetici (presente solo nello SCUBA diving oltre i 30 m di profonditá)
+\item Malattia da decompressione e embolia cerebrale \textrightarrow le bollicine di gas bloccano il flusso del sangue durante le risalite rapide e possono manifestarsi dolori alle articolazione e disfunzioni cerebrali.
+\item Intossicazione da ossigeno \textrightarrow qunado la pressione parziale dell'ossigeno supera 1 bar (oltre i 40 mdi profonditá) si hanno danni nell'attivitá elettrica cerebrale a causa  dell'iperossia
+\end{itemize}
+Per il trattamento di queste patologie si utilizza una camera iperbarica in cui viene somministrato ossigeno puro a 2-3 bar alternato ad aria \textrightarrow vengono trattate le malattie da decompressione, le embolie arteriose, le cancrene da gas e l'avvelenamento da CO.
+\subsubsection{Ambiente spaziale}
+
+In una missione spaziale con equipaggio i principali fattori da tenere in considerazione sono la distanza dalla Terra, la durata e l'autonomia della missione per riuscire a tenere sottocontrollo problemi fisiologici, psicologici e sociali: le missioni vengono classificate come:
+\begin{itemize}
+\item MS1 Missioni in orbita terrestre
+\item MS2 Missioni interplanetarie
+\item MS3 Missioni sulla luna
+\item MS4 Missioni marziane
+\end{itemize}
+
+Vi sono poi altri aspetti propri di una missione che potrebbero portare problemi all'equipaggio in quanto differenti da quelli terrestri, tra cui :
+\begin{itemize}
+\item \textbf{accelerazioni e le forze} (3-4 G durante il lancio e il rientro; 0$-10^-6G$ durante una LEO, 0.38G su Marte, 0.16G sulla Luna)
+\item \textbf{temperatura} (-150 a +150 in base alla posizione rispetto al Sole)
+\item \textbf{Il vuoto}  \textrightarrow un satellite a 250-400km risente di una pressioni di meni di 10 mmHg
+\item \textbf{Radiazioni} \textrightarrow le radiazioni solari e quelle cosmiche sono molto piú intense rispetto alla Terra.
+\end{itemize}
+ per cui le tute spaziali e la cabina devono essere in grado di ricreare un ambiente adatto alla vita.
+
+\paragraph{Effetti della gravitá}
+
+Sulla Terra la forza di gravitá attrae gli oggetti (siccome la massa dell'oggetto é trascurabile rispetto al pianeta) con accelerazione dipendente dalla massa moltiplicata per una costante (1 g=9.81m/$s^2$ sulla Terra,1.5s m/$s^2$ sulla luna) dell'oggetto mentre nel vuoto gli oggetti cadono tutti con stessa accelerazione (condizione di assenza di peso, condizione che si verifica sui satelliti in orbita attorno alla Terra a causa della somma di gravitá e forze inerziali), inoltre la forza di gravitá é inversamente proporzionale alla distanza tra i due corpi.
+
+Per lo studio di ambienti in assenza di gravitá si possono effettuarediversi tipi di test:
+\begin{itemize}
+\item \textbf{Test sugli effetti nel corto periodo} 
+\begin{itemize}
+\item Volo parabolico \textrightarrow manovra in cui viene simulata la microgravitá per 20 secondi seguendo una parabola; viene ripetuta per 30-50 volte in un volo
+\item Drop Tower \textrightarrow caduta libera per 100m in condizioni di vuoto estremo dove la capsula raggiunge i 160 km/h e microgravitá (0.0001G) per 8 secondi
+\item Sounding rockets \textrightarrow razzi con payload scientifico che raggiungono dai 50 ai 300 km di quota per lo studio dell'alta atmosfera, raggi UV, raggi cosmici e microgravitá.
+\end{itemize}
+\item \textbf{Test sugli effetti nel medio-lungo periodo}
+\begin{itemize}
+\item Test del lettino \textrightarrow il soggetto viene posto in posizione supina su un lettino con inclinazione di 4-6 gradi rispetto all'orizzontale per un tempo che va da poche ore a settimane (1 anno nel test piú lungo registrato)
+\item Immersione in acqua \textrightarrow immersione in una vasca d'acqua (a contatto o meno con il liquido), per simulare attivitá extraveicolari
+\end{itemize}
+\end{itemize}
+
+\paragraph{Caratteristiche dei raggi cosmici ed esposizione}
+
+Le \textbf{radiazioni cosmiche} rappresentano uno dei problemi piú gravi per gli astronauti in missioni interplanetarie e di lunga durata (nell'orbita terrestre vi é protezione da parte del campo magnetico terrestre), che si compongono di:
+\begin{itemize}
+\item \textit{Vento solare} \textrightarrow rilascio di elettroni e protoni energizzati dalla corona solare, effetto accentuato durante le \textbf{eruzioni solari}, le quali seguono un ciclo di 11 anni ma non hanno durata prevedibile
+\item \textit{Raggi galattici ed extragalattici} \textrightarrow nuclei altamente energetici (fino a 1000MeV) provenienti da altre galassie e dovuti all'esplosione di stelle.
+\item \textit{Fasce di Van Allen} \textrightarrow Strati di particelle (nuclei, protoni ad alta energia ed elettroni) provenienti dai raggi cosmici intrappolate dal campo magnetico terrestre.
+\item \textit{Elettroni gioviani} \textrightarrow particelle provenienti dal pianeta Giove 
+\end{itemize}
+ 
+L'esposizione a particelle radioattive viene espressa in millisievert (mSv) e il dosaggio massimo per una persona normale é di 250 mSv mentre da 1 a 4 per un astronauta; benché nelle missioni MS1 non ci sia bisogno di protezioni, nelle MS2-4 esse sono necessarie e si dividono in protezioni farmacologiche e del veicolo, infatti si hanno scudi magnetici, con cabine apposite in caso di eruzioni solari ( vi é un sistema di allarme) e a volte é presente un deflettore per deviare le particelle. \\
+Gli effetti di un'esposizione acuta si distinguono  in:
+\begin{itemize}
+\item effetti nel breve termine: nausea, vomito ed emorragia
+\item effetti nel lungo termine: insorgenza di cancri, danni al DNA, crescita cellulare incontrollata; riscontrati a livello molecolare e cellulare.
+\end{itemize}
+
+\paragraph{Adattamento del corpo umano all'ambiente spaziale}
+
+Il corpo umano richiede circa 6 settimane per adattarsi parzialmente all'assenza di gravitá (\textbf{Decondizionamento spaziale}), eccezion fatta per il sistema scheletrico e e gli effetti delle radiazioni per cui non si hanno ancora dati nel lungo termine \textrightarrow la condizione di 0g sarebbe \textit{adattamento completo}, teoricamente valida per coloro nati nello spazio. \\ Il tempo di riadattamento al rientro da una missione spaziale varia dalle 4 alle 6 settimane ma i fattori di stress possono allungarne la durata.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{/home/marco/adattamentospazio.png}
+\caption{Tempo di adattamento all'ambiente spaziale}
+\label{fig:tempo_adatt}
+\end{figure}
+
+
+\section{Aerotermodinamica}
+L'aerotermodinamica è il ramo di aerodinamica che studia i flussi su un corpo in condizioni  di temperatura elevate, dove anche i flussi termici sono importanti; occorre quindi tenere in considerazione la presenza di urti obliqui e progettare veicoli, per il volo in queste condizioni, in modo da ridurre la resistenza d'onda e in grado di resistere all'elevato scambio di calore.\\
+Occorre tenere in conto inoltre che la presenza di fenomeni di dissociazione e ionizzazione delle molecole, dovute all'eccitazione dei gradi di libertà vibrazionali a causa della temperatura.
+\subsection{Classi di veicoli ipersonici}
+I veicoli ipersonici possono essere suddivisi in base alle loro configurazioni:
+\begin{itemize}
+    \item \textbf{Winged veichles}
+    \item \textbf{Cruise and acceleration veichles}
+    \item \textbf{Ascent and re-entry veichles (ARV)} with air breathing \textrightarrow sono generalmente difficili da realizzare in quanto durante l'ascesa è richiesta efficienza aerodinamica mentra durante il rientro si necessita di resistenza ai flussi termici (raggio di curvatura piccolo) e freni aerodinamici.
+    \item \textbf{Planetary entry capsules} \textrightarrow durante il rientro si presenta il fenomeno di urto curvo e staccato (bow shock) con temperature che possono raggiungere i 10000K subito a monte della superficie d'urto
+\end{itemize}
+
+\subsection{Aerodinamica dei corpi tozzi}
+\subsubsection{Introduzione}
+
+Un corpo tozzo, in aerodinamica, può essere interpretato come un corpo caratterizzato da grande resistenza aerodinamica e quindi bassa efficienza e nelle missioni spaziali in cui è previsto un rientro in atmosfera è necessario avere della portanza in modo da ovviare ad incertezze nella densità dell'atmosfera in considerazione e inoltre evitare accelerazioni fuori scala al carico pagante (ad esempio in missioni con equipaggio non si possono superare i 6g; per generare portanza è dunque possibile prevedere profili aerodinamici, come è stato per lo Shuttle, o porre la capsula ad una certa incidenza.
+
+Durante la discesa è necessario considerare la variazione di densità di particelle, in particolare si passa da un flusso cosiddetto \textit{free molecular flow} dove il numero di Knudsen è grande ($Kn\sim{100}$) e quindi il libero cammino medio è elevato ad un \textit{flusso continuo} in cui il libero cammino medio è piccolo e sono soddisfatte le ipotesi della teoria di Navier-Stokes ($Kn\sim{1/100}$); in mezzo si ha una transizione in cui si può sia utilizzare il DSMC (Direct Simulation Monte Carlo) sia la teoria di Navier-Stokes con opportune condizioni al contorno.\\
+Il DSMC può essere utilizzato nelle condizioni di free molecular flow siccome considera la traiettoria di ogni singola molecola e la sola interazione con il corpo, trascurando le interazioni tra una molecola e l'altra; nella fase di transizione il DSMC analizza le interazioni di agglomerati di molecole ma trascurando sempre interazione tra esse. Utilizzando invece le N-S in transizione si considera come condizione al contorno un salto di velocità tra la prima particella fluida e il corpo (velocità relativa). \\
+Solitamente viene considerato continuo il flusso sulla parte frontale del corpo mentre sui bordi e la parte posteriore è considerato free stream flow e si applica il DSMC.
+
+Siccome si trattano corpi tozzi in volo ipersonico sarà sempre presente un urto di fronte al corpo; esso sarà tanto più vicino al corpo tanto più grande è il Mach di volo. Nella zona in cui è possibile applicare le N-S e quindi utilizzare le relazioni di salto e di Rankine-Hugoniot per gli urti si nota che il rapporto di densità tende ad un asintoto funzione di $\gamma$: ciò si traduce in una posizione limite del bow shock.\\ Questo avvicinamento dell'onda d'urto può comportare, specie negli strati alti del rientro, un mescolamento tra strato limite, che qui è più spesso, e onda d'urto \textrightarrow  questo fenomeno prende il nome di \textit{ viscous interaction}.
+
+Analizzando l'inclinazione dell'urto lungo la superficie del corpo si nota che nella zona immeditatamente circostante l'estremo del corpo, ossia dove l'urto è meno inclinato, il flusso a valle è subsonico.
+
+Sono da tenere in considerazione inoltre le reazioni chimiche che avvengono ad alte temperature e come detto l' eccitazione di gradi di libertà vibrazionali che comporta una dipendenza del $c_p$ e $c_v$ dalla temperatura.\\
+Le reazioni chimiche comprendono le reazioni di dissociazione, ad esempio:
+\begin{equation}
+\begin{split}
+    O_2 + O_2 \leftrightarrow 2O + O_2 \\
+    O_2 + N_2 \leftrightarrow 2O + N_2 \\
+    O_2 + O \leftrightarrow 2O + O 
+\end{split}
+\end{equation}
+e reazioni di scambio, come:
+\begin{equation}
+  \begin{split}
+    N2 + O \leftrightarrow NO + N\\
+    N_2 + O \leftrightarrow 2N + O \\
+    NO + M \leftrightarrow N + O + M
+    \end{split}
+\end{equation}
+dove M è la generica specie chimica.\\
+Occorre considerare inoltre la ricombinazione che può avvenire a seguito della dissociazione (endotermica \textrightarrow assorbe energia) siccome genererà un rilascio di energia che può facilmente degradare lo scudo termico e perciò è bene evitare materiale catalitici per questo fenomeno.\\
+A temperature maggiori di quelle a cui avvengono queste reazioni, l'energia cinetica ceduta alle molecole del flusso permette agli elettroni degli atomi di spostarsi negli orbitali più esterni fino a venire strappati dall'atomo con conseguente rilascio di energia; il fenomeno può essere scritto come:
+ \begin{equation}
+     NO + M \leftrightarrow NO^+ + e^- + M
+ \end{equation}
+
+\subsubsection{Scambio termico}
+
+Nonostante sia importante l'assetto d'atterraggio per evitare danni alla capsula, l'aspetto più critico durante la fase di rientro è lo scambio termico, che può avvenire principalmente in due modi:
+\begin{itemize}
+    \item \textbf{convettivo} \textrightarrow scambio che avviene per contatto tra corpo e flusso esterno e che a sua volta ha componente conduttiva, guidata dal gradiente di temperatura (segue la legge di Fourier) e una diffusiva, guidata dal gradiente di frazione di massa.
+    \item \textbf{radiativo} \textrightarrow scambio che avviene  per emissione di fotoni dalle particelle eccitate nello strato d'urto e segue la legge di Stefan-Boltzmann 
+    \begin{equation}
+        q_{rad}=\epsilon \cdot \sigma \cdot T^4
+    \end{equation}
+    con $\epsilon$ che è il coefficiente di corpo grigio e $\sigma$ la costante di Stefan-Boltzmann e vale $5,67 \cdot 10^{-8} W/K^4$. 
+\end{itemize}
+
+Il compito di proteggere la capsula dal surriscaldamento è quindi delegato al TPS ossia il \textit{thermal protection system} o \textit{scudo termico} il quale è composto da materiali ablativi che, pirolizzando (passaggio da stato solido a gassoso), crea un cuscinetto di gas il quale ha una temperatura minore rispetto all'interfaccia con il flusso esterno e protegge il corpo; nonostante sia un vantaggio questo determina maggiore difficoltà di progettazione in quanto si avrà interazione tra strato di gas e il flusso atmosferico.\\
+Questo tipo di materiale, poroso, è composto da una matrice, solitamente in carbonio, la quale non prende parte alla pirolisi ed una resina che produce il gas-cuscinetto; un comune materiale di questo tipo è il PICA.
+
+\subsection{Ambiente di volo}
+L'ambiente di volo è un aspetto di grande rilevanza nella progettazione di un veicolo spaziale e ne vanno valutate principalmente le condizioni atmosferiche, la composizione chimica e le specie presenti.
+
+\subsubsection{Atmosfera terrestre}
+Sulla Terra il modello di atmosfera di riferimento è quello ISA, che prevede 
+\subsubsection{Atmosfera marziana}
+\subsubsection{Atmosfera di Titano}
+
+\subsection{Aerodinamica nell'ipersonico inviscido}
+
+
+\begin{comment}
+\section{Conclusion}
+``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{comment}
+%%%%%
+\end{document}
+\right
